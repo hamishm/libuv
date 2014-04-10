@@ -48,6 +48,10 @@
 #include <sys/poll.h>
 #endif /* _AIX */
 
+#if defined(__HAIKU__)
+# include <sys/poll.h>
+#endif /* __HAIKU__ */
+
 #if defined(__APPLE__) && !TARGET_OS_IPHONE
 # include <CoreServices/CoreServices.h>
 #endif
@@ -95,7 +99,7 @@
 # define UV__POLLHUP  UV__EPOLLHUP
 #endif
 
-#if defined(__sun) || defined(_AIX)
+#if defined(__sun) || defined(_AIX) || defined(__HAIKU__)
 # define UV__POLLIN   POLLIN
 # define UV__POLLOUT  POLLOUT
 # define UV__POLLERR  POLLERR

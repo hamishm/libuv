@@ -28,6 +28,10 @@
 
 #include <sys/time.h>
 
+#ifdef __HAIKU__
+#include <kernel/OS.h>
+#endif
+
 #undef NANOSEC
 #define NANOSEC ((uint64_t) 1e9)
 
@@ -411,7 +415,7 @@ int uv_cond_timedwait(uv_cond_t* cond, uv_mutex_t* mutex, uint64_t timeout) {
 }
 
 
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) || defined(__HAIKU__)
 
 int uv_barrier_init(uv_barrier_t* barrier, unsigned int count) {
   int err;

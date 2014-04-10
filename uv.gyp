@@ -10,8 +10,11 @@
           ['OS=="solaris"', {
             'cflags': [ '-pthreads' ],
           }],
-          ['OS not in "solaris android"', {
+          ['OS not in "solaris android haiku"', {
             'cflags': [ '-pthread' ],
+          }],
+          ['OS=="haiku"', {
+            'defines': [ 'B_USE_POSITIVE_POSIX_ERRORS' ],
           }],
         ],
       }],
@@ -129,6 +132,7 @@
             'include/uv-darwin.h',
             'include/uv-bsd.h',
             'include/uv-aix.h',
+            'include/uv-haiku.h',
             'src/unix/async.c',
             'src/unix/atomic-ops.h',
             'src/unix/core.c',
@@ -152,12 +156,14 @@
             'src/unix/udp.c',
           ],
           'link_settings': {
-            'libraries': [ '-lm' ],
             'conditions': [
+              ['OS!="haiku"', {
+              	'libraries': [ '-lm' ],
+              }],
               ['OS=="solaris"', {
                 'ldflags': [ '-pthreads' ],
               }],
-              ['OS != "solaris" and OS != "android"', {
+              ['OS not in "solaris android haiku"', {
                 'ldflags': [ '-pthread' ],
               }],
             ],
@@ -262,6 +268,17 @@
         }],
         [ 'OS in "ios mac freebsd dragonflybsd openbsd netbsd".split()', {
           'sources': [ 'src/unix/kqueue.c' ],
+        }],
+        [ 'OS=="haiku"', {
+          'sources': [
+            'src/unix/haiku.c'
+          ],
+          'link_settings': {
+            'libraries': [
+              '-lnetwork', 
+              '-lposix_error_mapper'
+            ],
+          },
         }],
         ['uv_library=="shared_library"', {
           'defines': [ 'BUILDING_UV_SHARED=1' ]
