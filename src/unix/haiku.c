@@ -223,7 +223,7 @@ int uv_exepath(char* buffer, size_t* size) {
   Dl_info info;
   int res;
 
-  if (buffer == NULL || size == NULL)
+  if (buffer == NULL || size == NULL || *size == 0)
     return -EINVAL;
 
   res = dladdr((void*)uv_exepath, &info);
