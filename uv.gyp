@@ -158,7 +158,7 @@
           'link_settings': {
             'conditions': [
               ['OS!="haiku"', {
-              	'libraries': [ '-lm' ],
+                'libraries': [ '-lm' ],
               }],
               ['OS=="solaris"', {
                 'ldflags': [ '-pthreads' ],
@@ -275,7 +275,7 @@
           ],
           'link_settings': {
             'libraries': [
-              '-lnetwork', 
+              '-lnetwork',
               '-lposix_error_mapper'
             ],
           },

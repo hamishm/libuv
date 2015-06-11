@@ -41,7 +41,7 @@
 
 
 
-int uv__platform_loop_init(uv_loop_t* loop, int default_loop) {
+int uv__platform_loop_init(uv_loop_t* loop) {
   loop->backend_fd = -1;
   return 0;
 }
@@ -116,7 +116,7 @@ void uv__io_poll(uv_loop_t* loop, int timeout) {
       fds[curfd].events = w->pevents;
       fds[curfd].revents = 0;
       curfd++;
-  	}
+    }
   }
 
   for (;;) {
@@ -341,7 +341,7 @@ int uv_cpu_info(uv_cpu_info_t** cpu_infos, int* count) {
 
   *cpu_infos = malloc(sys_info.cpu_count * sizeof(uv_cpu_info_t));
   if (!(*cpu_infos)) {
-  	free(cpu_info);
+    free(cpu_info);
     return -errno;
   }
 
